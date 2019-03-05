@@ -3,6 +3,7 @@ class Profile < ApplicationRecord
 
   mount_uploader :avatar, AvatarUploader
   belongs_to :user
+  has_many :bits
 
   def build_request(from, to)
     binding.pry
@@ -11,5 +12,15 @@ class Profile < ApplicationRecord
 
     @sender.friend_request(@recipient)
   end
+
+  def accepts_friend_requests(s, r)
+    binding.pry
+    sender = Profile.find(s)
+    recipient = profile.find(r)
+
+    recipient.accept_request(sender)
+
+  end
+
 
 end

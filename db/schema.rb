@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_03_161015) do
+ActiveRecord::Schema.define(version: 2019_03_05_161516) do
+
+  create_table "bits", force: :cascade do |t|
+    t.text "content"
+    t.integer "profile_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "friendships", force: :cascade do |t|
     t.string "friendable_type"

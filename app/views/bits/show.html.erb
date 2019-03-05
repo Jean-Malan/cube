@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @bit.content %>
+</p>
+
+<p>
+  <strong>Profile:</strong>
+  <%= @bit.profile_id %>
+</p>
+
+<%= link_to 'Edit', edit_bit_path(@bit) %> |
+<%= link_to 'Back', bits_path %>

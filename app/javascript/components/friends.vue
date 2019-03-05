@@ -1,15 +1,17 @@
 <template>
   <div>
-     <div class="row" style="margin-left: 20%;">
-      <h2 @click="getAllFriends" class="btn btn-danger btn-sm col-md-3" style="cursor: pointer;font-size: 18px;font-weight: bold;margin-right: 2%;margin-top: 5%;">
-        All Friends
-      </h2>
-      <h2 @click="getPendingRequests" class="btn btn-warning btn-sm col-md-3" style="cursor: pointer;font-size: 18px;font-weight: bold;margin-right: 2%;margin-top: 5%;">
-        Pending Requests
-      </h2>
-      <h2 @click="getFriendRequests" class="btn btn-alert btn-sm col-md-3" style="cursor: pointer;font-size: 18px;font-weight: bold;margin-right: 2%;margin-top: 5%;">
-        Friend Requests
-      </h2>
+    <div v-if="current_user == userId">
+      <div class="row" style="margin-left: 20%;">
+        <h2 @click="getAllFriends" class="btn btn-danger btn-sm col-md-3" style="cursor: pointer;font-size: 18px;font-weight: bold;margin-right: 2%;margin-top: 5%;">
+          All Friends
+        </h2>
+        <h2 @click="getPendingRequests" class="btn btn-warning btn-sm col-md-3" style="cursor: pointer;font-size: 18px;font-weight: bold;margin-right: 2%;margin-top: 5%;">
+          Pending Requests
+        </h2>
+        <h2 @click="getFriendRequests" class="btn btn-alert btn-sm col-md-3" style="cursor: pointer;font-size: 18px;font-weight: bold;margin-right: 2%;margin-top: 5%;">
+          Friend Requests
+        </h2>
+      </div>
     </div>
 
     <div style="grid-template-columns: 33% 33% 3%;display: grid;margin-left: 10%;">
@@ -29,7 +31,7 @@
             <h2 style="font-size:30px;font-weight:bold;text-align: center;">{{user.username}}</h2>
             <div v-if="displayFriends" @click="addFriend(current_user_id, user.id)" class="btn btn-primary" style="background-color:#3c4858;">Add Friend </div>
             <div v-if="displayPending" @click="CancelRequest(current_user_id, user.id)" class="btn btn-primary" style="background-color:#3c4858;">Cancel Request </div>
-            <div v-if="displayingRequested" @click="acceptRequest(current_user_id, user.id)" class="btn btn-primary" style="background-color:#3c4858;">Accept Request </div>
+            <div v-if="displayingRequested" @click="acceptFriendRequest(user.id)" class="btn btn-primary" style="background-color:#3c4858;">Accept Request </div>
             </tr>
           </table>
         </div>
@@ -40,7 +42,7 @@
 
 <script>
 export default {
-  props: ["userId", "limit"],
+  props: ["userId", "limit", "current_user"],
   data() {
     return {
       current_user_id: this.userId,
@@ -92,17 +94,30 @@ export default {
     },
     getAllFriends() {
       this.users = [];
-      this.displayFriends = true;
-      this.displayPending = false;
-      this.displayingRequested = false;
       var user = this.users;
+      var id = this.userId;
       Rails.ajax({
-        url: "/profiles/get_all_profiles",
+        url: "/profiles/get_friends",
         type: "GET",
+        data: id,
         dataType: "json",
         success(data) {
-          console.log(data);
           user.push(data);
+          console.log(data);
+        }
+      });
+    },
+    acceptFriendRequest(from) {
+      var data = new FormData();
+      data.append("profile[sender]", from);
+      Rails.ajax({
+        url: "/profiles/handle_friend_request",
+        type: "POST",
+        data: data,
+        dataType: "json",
+        success(data) {
+          user.push(data);
+          this.getFriendRequests();
         }
       });
     },
@@ -124,10 +139,13 @@ export default {
     }
   },
   mounted() {
+    var id = this.userId;
+
     var user = this.users;
     Rails.ajax({
-      url: "/profiles/get_all_profiles",
+      url: "/profiles/get_friends",
       type: "GET",
+      data: id,
       dataType: "json",
       success(data) {
         console.log(data);

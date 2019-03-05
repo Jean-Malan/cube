@@ -22,10 +22,10 @@ class ProfilesController < ApplicationController
     respond_with(@profiles.to_json)
   end
 
-  def get_all_friends
-    id = profile_params[:id]
-    @profiles = Profile.find(id)
-    respond_with(@profiles.to_json)
+  def get_friends
+    id = params.keys[0]
+    @friends = Profile.find(id).friends
+    respond_with(@friends.to_json)
 
   end
 
@@ -39,15 +39,21 @@ class ProfilesController < ApplicationController
     respond_with(@friends.to_json)
   end
 
-  def build_friend_request
-    from = profile_params[:current_user].to_i
-    to = profile_params[:friend_user].to_i
-    @sender = Profile.find(from)
-    @recipient = Profile.find(to)
+  # def accept_friend_request
+  #   bindding.pry
+  #   @recipient = Profile.find(profile_params[:recipient].to_i)
+  #   @sender = Profile.find(profile_params[:sender].to_i)
+  #   @recipient.accept_request(@sender)
+  #   respond_with(@profile.to_json)
+  # end
+
+  def handle_friend_request
     binding.pry
-    @sender.friend_request(@recipient)
-    respond_with(@profile.to_json)
+    @sender = Profile.find(profile_params[:sender].to_i)
+    @recipient = current_user.profiles[0]
     
+    @recipient.accept_request(@sender)
+    respond_with(@recipient.to_json)
   end
 
   def add_friend
@@ -116,6 +122,6 @@ class ProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:username, :first_name, :friend_user, :current_user, :limit, :last_name, :address, :country, :city, :about, :postal_code, :avatar, :color)
+      params.require(:profile).permit(:username, :sender, :first_name, :friend_user, :current_user, :limit, :last_name, :address, :country, :city, :about, :postal_code, :avatar, :color)
     end
 end
