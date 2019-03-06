@@ -1,5 +1,5 @@
 <%= form_with(model: profile, local: true) do |form| %>
-  <div class="content">
+  <div class="content" style="margin-left:25%">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-8">
@@ -8,9 +8,7 @@
                   <div class="card-icon">
                     <i class="fa fa-person"></i>
                   </div>
-                  <h4 class="card-title">Edit Profile -
-                    <small class="category">Complete your profile</small>
-                  </h4>
+                  <h4 style="font-size:30px;" class="card-title">Complete your profile</h4>
                 </div>
                 <div class="card-body">
                   <form>
@@ -18,13 +16,13 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Username</label>
-                          <%= form.text_field :username %>
+                          <%= form.text_field :username,  {:class => 'form-control'}%>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <%= form.label :avatar %><br>
-                          <%= form.file_field :image %>
+                          <%= form.file_field :image,  {:class => 'form-control'} %>
                         </div>
                       </div>
                     </div>
@@ -32,13 +30,13 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">First Name</label>
-                          <%= form.text_field :first_name %>
+                          <%= form.text_field :first_name,  {:class => 'form-control'} %>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Last Name</label>
-                          <%= form.text_field :last_name %>
+                          <%= form.text_field :last_name,  {:class => 'form-control'} %>
                         </div>
                       </div>
                     </div>
@@ -46,7 +44,7 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Adress</label>
-                          <input v-model="address" type="text" class="form-control">
+                          <%= form.text_field :address,  {:class => 'form-control'} %>
                         </div>
                       </div>
                     </div>
@@ -54,19 +52,19 @@
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">City</label>
-                          <input v-model="city" type="text" class="form-control">
+                          <%= form.text_field :city,  {:class => 'form-control'} %>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Country</label>
-                          <%= form.text_field :country %>
+                          <%= form.text_field :country,  {:class => 'form-control'} %>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Postal Code</label>
-                          <input v-model="postal_code" type="text" class="form-control">
+                          <%= form.text_field :postal_code,  {:class => 'form-control'} %>
                         </div>
                       </div>
                     </div>
@@ -75,7 +73,7 @@
                         <div class="form-group">
                           <label>About Me</label>
                           <div class="form-group">
-                            <textarea v-model="about" class="form-control" rows="5"></textarea>
+                            <%= form.text_field :about,  {:class => 'form-control'} %>
                           </div>
                         </div>
                       </div>
@@ -83,23 +81,6 @@
                     <%= form.submit%>
                     <div class="clearfix"></div>
                   </form>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card card-profile">
-                <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img"  />
-                  </a>
-                </div>
-                <div class="card-body">
-                  <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                  <h4 class="card-title">{{first_name}} {{last_name}}</h4>
-                  <p class="card-description">
-                    {{about}}
-                  </p>
-                  <a href="#pablo" class="btn btn-rose btn-round">Follow</a>
                 </div>
               </div>
             </div>

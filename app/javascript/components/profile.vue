@@ -17,11 +17,11 @@
               <div class="profile">
                 <div class="profile-pic">
                   <div id="circle" :style="{'background': profile.color}" style="width: 200px;height: 200px;margin-left: -40%;margin-top: 2%;background: rgb(165, 250, 223);;">
-                    <p style="margin-left: 35%;font-weight: bold;padding-top: 44%;font-size: 78px;color: white;">{{profile.first_name[0]}}</p>
+                    <p style="margin-left: 35%;font-weight: bold;padding-top: 44%;font-size: 78px;color: white;">{{profile.first_name[0].toUpperCase()}}</p>
                   </div>
                 </div>
                 <div class="name" style="margin-left: 10%;">
-                  <h1 class="title" style="margin-top: -23%;">{{profile.username}}{{profile.id}}{{pendingFriendList}}</h1>
+                  <span><h1 class="title" style="margin-top: -23%;">{{profile.username}}</h1><i @click="editProfile(profile.id)" style="cursor:pointer" class="fa fa-edit"></i></span>
                   <h6>{{profile.first_name}}{{profile.last_name}}</h6>
                   <h6>{{profile.country}}, {{profile.city}}, {{profile.country}}</h6>
                   <i class="fa fa-dribbble"></i>
@@ -90,6 +90,9 @@ export default {
     };
   },
   methods: {
+    editProfile(id) {
+      window.location = "/profiles/" + id + "/edit";
+    },
     addFriend(from, to) {
       var profile_id = to;
       var data = new FormData();

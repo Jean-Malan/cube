@@ -1,8 +1,9 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
-  respond_to :html, :json, :xml
   before_action :verify_profile, :except => [:new, :create]
+  respond_to :html, :json, :xml
+  before_action :authenticate_profile_user, only: [:edit, :update]
+  before_action :authenticate_user!
 
   # GET /profiles
   # GET /profiles.json
@@ -18,6 +19,12 @@ class ProfilesController < ApplicationController
       return true 
     else
       redirect_to new_profile_url
+    end
+  end
+
+  def authenticate_profile_user
+    if @profile.user_id != current_user.id
+      redirect_to profiles_url
     end
   end
 

@@ -77,7 +77,7 @@
                         </div>
                       </div>
                     </div>
-                    <button @click="submitProfile" type="submit" class="btn btn-rose pull-right">Update Profile</button>
+                    <button @click="submitProfile" type="submit" class="btn btn-rose pull-right">Submit Profile</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>
@@ -124,7 +124,7 @@ export default {
         data: data,
         dataType: "json",
         success() {
-          window.location = "/";
+          window.location = "";
         }
       });
     }
