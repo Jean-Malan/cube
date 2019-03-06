@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
-  before_action :verify_profile, :except => [:new, :create]
+  before_action :verify_profile, :except => [:new, :create, :index]
   respond_to :html, :json, :xml
   before_action :authenticate_profile_user, only: [:edit, :update]
   before_action :authenticate_user!
@@ -85,6 +85,7 @@ class ProfilesController < ApplicationController
   # GET /profiles/new
   def new    
     @profile = Profile.new
+  
   end
 
   # GET /profiles/1/edit
@@ -99,8 +100,8 @@ class ProfilesController < ApplicationController
     @profile.color = "#" + (Random.new.bytes(3).unpack("H*")[0]).to_s
     respond_to do |format|
       if @profile.save
-        format.html { redirect_to @profile, notice: 'Profile was successfully created.' }
-        format.json { render :show, status: :created, location: @profile }
+        format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
+        format.json { render :show, status: :ok, location: @profile }
       else
         format.html { render :new }
         format.json { render json: @profile.errors, status: :unprocessable_entity }

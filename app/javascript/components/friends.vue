@@ -2,13 +2,13 @@
 <div>
   <div v-if="current_user == userId">
     <div class="row" style="margin-left: 20%;">
-      <h2 @click="getAllFriends" class="btn btn-danger btn-sm col-md-3" style="cursor: pointer;font-size: 18px;font-weight: bold;margin-right: 2%;margin-top: 5%;">
+      <h2 @click="getAllFriends" class="btn btn-sm col-md-3" style="cursor: pointer;font-size: 18px;font-weight: bold;margin-right: 2%;margin-top: 5%;background:#24B4F8">
         All Friends
       </h2>
-      <h2 @click="getPendingRequests" class="btn btn-warning btn-sm col-md-3" style="cursor: pointer;font-size: 18px;font-weight: bold;margin-right: 2%;margin-top: 5%;">
+      <h2 @click="getPendingRequests" class="btn btn-sm col-md-3" :style="{'background-color': pendingColor}" style="cursor: pointer;font-size: 18px;font-weight: bold;margin-right: 2%;margin-top: 5%;">
         Pending Requests
       </h2>
-      <h2 @click="getFriendRequests" class="btn btn-alert btn-sm col-md-3" style="cursor: pointer;font-size: 18px;font-weight: bold;margin-right: 2%;margin-top: 5%;">
+      <h2 @click="getFriendRequests" class="btn btn-sm col-md-3" :style="{'background-color': requestColor}" style="cursor: pointer;font-size: 18px;font-weight: bold;margin-right: 2%;margin-top: 5%;">
         Friend Requests
       </h2>
     </div>
@@ -22,7 +22,7 @@
           :style="{'background-color': user.color}"
           style= "width: 60px;height: 60px;border-radius: 50%;margin-top: 5%;margin-left: 38%;">
           <p @click="goToProfile(user.id)"
-            style="font-size: 38px;text-align:center;cursor:pointer;color: white;margin-left: 8%;margin-top: 35%;font-weight: bold;">
+            style="font-size: 38px;text-align:center;cursor:pointer;color: white;margin-left: 0%;margin-top: 35%;font-weight: bold;">
             {{user.username[0].toUpperCase()}}
           </p>
         </div>
@@ -135,6 +135,17 @@ export default {
           user.push(data);
         }
       });
+    }
+  },
+  computed: {
+    allColor() {
+      this.displayFriends ? "#24B4F8" : "#919191";
+    },
+    pendingColor() {
+      this.displayPending ? "#24B4F8" : "#919191";
+    },
+    requestColor() {
+      this.displayingRequested ? "#24B4F8" : "#919191";
     }
   },
   mounted() {

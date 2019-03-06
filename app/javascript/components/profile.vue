@@ -21,7 +21,7 @@
                   </div>
                 </div>
                 <div class="name" style="margin-left: 10%;">
-                  <span><h1 class="title" style="margin-top: -23%;">{{profile.username}}</h1><i @click="editProfile(profile.id)" style="cursor:pointer" class="fa fa-edit"></i></span>
+                  <span><h1 class="title" style="margin-top: -23%;">{{profile.username}}</h1><i v-if="profile.id != current_user" @click="editProfile(profile.id)" style="cursor:pointer" class="fa fa-edit"></i></span>
                   <h6>{{profile.first_name}}{{profile.last_name}}</h6>
                   <h6>{{profile.country}}, {{profile.city}}, {{profile.country}}</h6>
                   <i class="fa fa-dribbble"></i>

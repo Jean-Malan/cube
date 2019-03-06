@@ -8,7 +8,7 @@
     </div>
 
     <div v-if="newBit" class="card" style="width: 70% !important;margin-top: 5%;;margin-left: 15%;background:#f5f5f5">
-      <input v-model="newBitContent" style="height:100px;"/>
+      <input v-model="newBitContent" style="height:100px;text-align: center;font-size: 20px;"/>
       <div style="display:flex">
         <div @click="submitNewBit" class="btn" style="background:#24B4F8;width:50%">Submit</div>
         <div @click="newBit = !newBit" class="btn" style="background:red;width:50%">Cancel</div>

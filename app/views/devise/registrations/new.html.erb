@@ -1,0 +1,31 @@
+<h2 style="text-align:center">Sign up</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <div style="width:20%;margin-top:5%;margin-left:40%;background: white;text-align: center;" class="card card-body center">
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <div class="field">
+      <%= f.label :email %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", :class => 'form-control center', :style=> "text-align:center" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password %>
+      <% if @minimum_password_length %><br />
+      <em>(Required: 1 uppercase character, 1 lowercase character, 1 special character,1 number and must be at least 6 characters long.)</em>
+      <% end %><br />
+      <%= f.password_field :password, autocomplete: "new-password", :class => 'form-control', :style=> "text-align:center"%>
+    </div>
+
+    <div class="field">
+      <%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", :class => 'form-control', :style=> "text-align:center"%>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Sign up", :class=>"btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
