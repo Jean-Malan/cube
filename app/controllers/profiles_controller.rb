@@ -2,22 +2,34 @@ class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
   respond_to :html, :json, :xml
+  before_action :verify_profile, :except => [:new, :create]
 
   # GET /profiles
   # GET /profiles.json
   def index
     @profile = User.get_current_profile(current_user.id)
-    @current_user = current_user.profiles[0].id
+    @user = current_user.profiles[0].id
+    @friends = Profile.get_friend_ids(current_user.id)
+    @pending_friends = Profile.get_pending_friend_ids(current_user.id)
+  end
+
+  def verify_profile
+    if Profile.verify_user_profile(current_user.id)
+      return true 
+    else
+      redirect_to new_profile_url
+    end
   end
 
   # GET /profiles/1
   # GET /profiles/1.json
   def show
-    @current_user = current_user.profiles[0].id
+    @user = current_user.profiles[0].id
+    @friends = Profile.get_friend_ids(current_user.id)
+    @pending_friends = Profile.get_pending_friend_ids(current_user.id)
   end
 
   def get_all_profiles
-    # binding.pry
     @profiles = Profile.all
     respond_with(@profiles.to_json)
   end
@@ -48,7 +60,6 @@ class ProfilesController < ApplicationController
   # end
 
   def handle_friend_request
-    binding.pry
     @sender = Profile.find(profile_params[:sender].to_i)
     @recipient = current_user.profiles[0]
     
@@ -57,13 +68,15 @@ class ProfilesController < ApplicationController
   end
 
   def add_friend
-    @to = User.find(to)
-    @from = User.find(from)
-    @to.friend_request(@from)
+    to = profile_params[:to].to_i
+    from = current_user.id
+    @to = Profile.find(to)
+    @from = User.find(from).profiles[0]
+    @from.friend_request(@to)
   end
 
   # GET /profiles/new
-  def new
+  def new    
     @profile = Profile.new
   end
 
@@ -91,7 +104,6 @@ class ProfilesController < ApplicationController
   # PATCH/PUT /profiles/1
   # PATCH/PUT /profiles/1.json
   def update
-    binding.pry
     @profile.avatar = profile_params[:avatar]
     respond_to do |format|
       if @profile.update(profile_params)
@@ -122,6 +134,6 @@ class ProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:username, :sender, :first_name, :friend_user, :current_user, :limit, :last_name, :address, :country, :city, :about, :postal_code, :avatar, :color)
+      params.require(:profile).permit(:username, :sender, :first_name, :to, :from, :friend_user, :current_user, :limit, :last_name, :address, :country, :city, :about, :postal_code, :avatar, :color)
     end
 end

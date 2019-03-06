@@ -9,9 +9,10 @@ Rails.application.routes.draw do
   
   resources :profiles do
       collection do
+        get :get_friend_ids
+        post :add_friend
         get :get_all_profiles
         get :get_friends
-        post :build_friend_request
         get :get_all_pending_requests
         get :get_all_friend_requests
         post :handle_friend_request

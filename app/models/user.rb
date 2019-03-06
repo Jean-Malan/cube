@@ -10,4 +10,9 @@ class User < ApplicationRecord
     id = find(id).profiles[0].id
     return Profile.find(id)
   end
+
+  def self.has_a_profile?(id)
+    User.find(id).profiles.count >= 1 ? true : false
+  end
+
 end

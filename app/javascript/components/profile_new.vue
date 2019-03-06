@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content" style="margin-left: 25%;">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-8">
@@ -8,9 +8,7 @@
                   <div class="card-icon">
                     <i class="fa fa-person"></i>
                   </div>
-                  <h4 class="card-title">Edit Profile -
-                    <small class="category">Complete your profile</small>
-                  </h4>
+                  <h4 style="font-size:30px;" class="card-title">Complete your profile</h4>
                 </div>
                 <div class="card-body">
                   <form>
@@ -85,23 +83,6 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
-              <div class="card card-profile">
-                <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img"  />
-                  </a>
-                </div>
-                <div class="card-body">
-                  <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                  <h4 class="card-title">{{first_name}} {{last_name}}</h4>
-                  <p class="card-description">
-                    {{about}}
-                  </p>
-                  <a href="#pablo" class="btn btn-rose btn-round">Follow</a>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -141,7 +122,10 @@ export default {
         url: "/profiles",
         type: "POST",
         data: data,
-        dataType: "json"
+        dataType: "json",
+        success() {
+          window.location = "/";
+        }
       });
     }
   }

@@ -1,1 +1,1 @@
-<%= tag.div id: :profile, data: {profile: @profile.to_json, current_user: @current_user } %>
+<%= tag.div id: :profile, data: {profile: @profile.to_json, current_user: @user, friends: @friends.to_json, pending_friends: @pending_friends.to_json} %>

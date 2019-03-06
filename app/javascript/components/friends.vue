@@ -1,43 +1,42 @@
 <template>
-  <div>
-    <div v-if="current_user == userId">
-      <div class="row" style="margin-left: 20%;">
-        <h2 @click="getAllFriends" class="btn btn-danger btn-sm col-md-3" style="cursor: pointer;font-size: 18px;font-weight: bold;margin-right: 2%;margin-top: 5%;">
-          All Friends
-        </h2>
-        <h2 @click="getPendingRequests" class="btn btn-warning btn-sm col-md-3" style="cursor: pointer;font-size: 18px;font-weight: bold;margin-right: 2%;margin-top: 5%;">
-          Pending Requests
-        </h2>
-        <h2 @click="getFriendRequests" class="btn btn-alert btn-sm col-md-3" style="cursor: pointer;font-size: 18px;font-weight: bold;margin-right: 2%;margin-top: 5%;">
-          Friend Requests
-        </h2>
-      </div>
+<div>
+  <div v-if="current_user == userId">
+    <div class="row" style="margin-left: 20%;">
+      <h2 @click="getAllFriends" class="btn btn-danger btn-sm col-md-3" style="cursor: pointer;font-size: 18px;font-weight: bold;margin-right: 2%;margin-top: 5%;">
+        All Friends
+      </h2>
+      <h2 @click="getPendingRequests" class="btn btn-warning btn-sm col-md-3" style="cursor: pointer;font-size: 18px;font-weight: bold;margin-right: 2%;margin-top: 5%;">
+        Pending Requests
+      </h2>
+      <h2 @click="getFriendRequests" class="btn btn-alert btn-sm col-md-3" style="cursor: pointer;font-size: 18px;font-weight: bold;margin-right: 2%;margin-top: 5%;">
+        Friend Requests
+      </h2>
     </div>
+  </div>
 
-    <div style="grid-template-columns: 33% 33% 3%;display: grid;margin-left: 10%;">
-      <div v-for="user in users[0]">
-        <div class="card card-body" style=" background:#eee;height:260px;width:300px;overflow-y:scroll;">
-            <div 
-              id="circle" 
-              :style="{'background-color': user.color}"
-              style= "width: 60px;height: 60px;border-radius: 50%;margin-top: 5%;margin-left: 38%;">
-              
-              <p @click="goToProfile(user.id)"
-                style="font-size: 38px;text-align:center;cursor:pointer;color: white;margin-left: 8%;margin-top: 35%;font-weight: bold;">
-                {{user.username[0].toUpperCase()}}
-              </p>
-
-            </div>
-            <h2 style="font-size:30px;font-weight:bold;text-align: center;">{{user.username}}</h2>
-            <div v-if="displayFriends" @click="addFriend(current_user_id, user.id)" class="btn btn-primary" style="background-color:#3c4858;">Add Friend </div>
-            <div v-if="displayPending" @click="CancelRequest(current_user_id, user.id)" class="btn btn-primary" style="background-color:#3c4858;">Cancel Request </div>
-            <div v-if="displayingRequested" @click="acceptFriendRequest(user.id)" class="btn btn-primary" style="background-color:#3c4858;">Accept Request </div>
-            </tr>
-          </table>
+  <div style="grid-template-columns: 33% 33% 3%;display: grid;margin-left: 10%;">
+    <div v-for="user in users[0]">
+      <div class="card card-body" style=" background:#eee;height:260px;width:300px;overflow-y:scroll;">
+        <div 
+          id="circle" 
+          :style="{'background-color': user.color}"
+          style= "width: 60px;height: 60px;border-radius: 50%;margin-top: 5%;margin-left: 38%;">
+          <p @click="goToProfile(user.id)"
+            style="font-size: 38px;text-align:center;cursor:pointer;color: white;margin-left: 8%;margin-top: 35%;font-weight: bold;">
+            {{user.username[0].toUpperCase()}}
+          </p>
+        </div>
+        <h2 style="font-size:30px;font-weight:bold;text-align: center;">
+          {{user.username}}
+        </h2>
+        <div v-if="displayingRequested" @click="acceptFriendRequest(user.id)" class="btn btn-primary" style="background-color:#3c4858;">
+          Accept Request 
         </div>
       </div>
     </div>
   </div>
+</div>
+
 </template>
 
 <script>

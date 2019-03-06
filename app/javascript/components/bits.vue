@@ -1,10 +1,12 @@
 <template>
   <div>
-    <div class="pull-right">
+
+    <div v-if="profile.id == current_user" class="pull-right">
       <div @click="newBit = !newBit" class="btn" style="background:#24B4F8">
         New Bit
       </div>
     </div>
+
     <div v-if="newBit" class="card" style="width: 70% !important;margin-top: 5%;;margin-left: 15%;background:#f5f5f5">
       <input v-model="newBitContent" style="height:100px;"/>
       <div style="display:flex">
@@ -12,11 +14,12 @@
         <div @click="newBit = !newBit" class="btn" style="background:red;width:50%">Cancel</div>
       </div>
     </div>
+
     <div v-for="bit in bits[0]">
-      <div style="width: 70% !important;margin-top: 5%;;margin-left: 15%;background:#f5f5f5"class="card bitcard">
-        <div id="bit-header" style="margin-left:2%;margin-top:3%;display: flex;">
+      <div style="width: 70% !important;margin-top: 5%;;margin-left: 15%;background:#f5f5f5;padding:1%"class="card bitcard">
+        <div id="bit-header" style="margin-left:2%;margin-top:1%;display: flex;">
           <div id="circle" :style="{'background': profile.color}" style="width: 40px;height: 40px;border-radius: 50%;margin-right:5%;margin-left:2%">
-            <p style="font-size: 28px;color: white;margin-left: 35%;margin-top: 25%;">{{profile.first_name[0]}}</p>
+            <p style="font-size: 28px;color: white;margin-left: 20%;margin-top: 25%;font-weight: bold;">{{profile.first_name[0]}}</p>
           </div>
           <h4 style="font-wieght:bold">@{{profile.username}}</h4>
         </div>
@@ -24,14 +27,12 @@
       </div>
     </div>
 
-
-
   </div>
 </template>
 
 <script>
 export default {
-  props: ["profile"],
+  props: ["profile", "current_user"],
   data() {
     return {
       bits: [],
@@ -57,7 +58,7 @@ export default {
         data: data,
         dataType: "json",
         success(data) {
-          bit[0].push(appendBit);
+          bit[0].unshift(appendBit);
         }
       });
     },
